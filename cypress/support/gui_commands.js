@@ -44,9 +44,15 @@ Cypress.Commands.add('login', (
       cy.get("[data-qa-selector='password_field']").type(password, { log: false })
       cy.get("[data-qa-selector='sign_in_button']").click()
     }
-  
+    
+    const validate = () => {
+        cy.visit('/')
+        cy.location('pathname', {timeout:1000}).should('not.eq', '/users/sign_in')
+    }
+
     const options = {
       cacheAcrossSpecs: true,
+      validate
     }
   
     if (cacheSession) {
@@ -57,9 +63,9 @@ Cypress.Commands.add('login', (
   })
 
 Cypress.Commands.add('logout', function(){
-    cy.login()
-    cy.get('.header-user-dropdown-toggle').click()
-    cy.get('.sign-out-link').click()
+
+    cy.get('.qa-user-avatar').click()
+    cy.contains('Sign out').click()
 })
 
 Cypress.Commands.add('create_project', function(project) {

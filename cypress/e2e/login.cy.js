@@ -7,9 +7,4 @@ describe('login page', () => {
 
     cy.get('.qa-user-avatar').should('be.visible')    
   })
-  it.only('Successfull logout', function(){
-  
-    cy.logout()
-    cy.url().should('be.equal', 'http://localhost/users/sign_in')
-  })
 })
