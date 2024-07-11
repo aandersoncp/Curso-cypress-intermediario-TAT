@@ -75,3 +75,7 @@ Cypress.Commands.add('create_project', function(project) {
     cy.get('#blank-project-pane > #new_project > .btn-success').click()
 
 })
+
+Cypress.Commands.add('createIssue', function(project){
+    cy.contains(project.name).click()
+})
