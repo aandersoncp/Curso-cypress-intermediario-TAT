@@ -26,12 +26,12 @@
 
 
 
-Cypress.Commands.add('login', function(user = Cypress.env('user_name'), password = Cypress.env('user_password')){
-    cy.visit('/users/sign_in')
-    cy.get('#user_login').type(user)
-    cy.get('#user_password').type(password, { log: false })
-    cy.get('#new_user > .submit-container > .btn').click()
-})
+// Cypress.Commands.add('login', function(user = Cypress.env('user_name'), password = Cypress.env('user_password')){
+//     cy.visit('/users/sign_in')
+//     cy.get('#user_login').type(user)
+//     cy.get('#user_password').type(password, { log: false })
+//     cy.get('#new_user > .submit-container > .btn').click()
+// })
 
 Cypress.Commands.add('login', (
     user = Cypress.env('user_name'), 
@@ -62,13 +62,13 @@ Cypress.Commands.add('login', (
     }
   })
 
-Cypress.Commands.add('logout', function(){
+Cypress.Commands.add('logout', () => {
 
     cy.get('.qa-user-avatar').click()
     cy.contains('Sign out').click()
 })
 
-Cypress.Commands.add('create_project', function(project) {
+Cypress.Commands.add('create_project', (project) => {
     cy.visit('/projects/new')
     cy.get('#blank-project-name > .project-name > #project_name').type(project.name)
     cy.get(':nth-child(5) > #project_description').type(project.description)
@@ -76,6 +76,10 @@ Cypress.Commands.add('create_project', function(project) {
 
 })
 
-Cypress.Commands.add('createIssue', function(project){
-    cy.contains(project.name).click()
+Cypress.Commands.add('createIssue', issue => {
+    cy.visit(`/${Cypress.env('user_name')}/${issue.project.name}/issues/new`)
+
+    cy.get('.qa-issuable-form-title').type(issue.title)
+    cy.get('.qa-issuable-form-description').type(issue.description)
+    cy.contains('Submit issue').click()
 })
